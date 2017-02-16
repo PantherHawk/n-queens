@@ -79,11 +79,38 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      //retrieve the row
+      var row = this.get(rowIndex);
+      //set total to items on board to zero.
+      var total = 0;
+      //iterate through row.
+      for (var i = 0; i < row.length; i++){
+        //if row location contains rook (1?) ...
+        if (row[i] === 1) {
+          // ...increment total.
+          total++;
+        }
+      }
+      // if more than one rook in a row...
+      if (total >= 2){
+        // ... return true
+        return true;
+      }
+      // otherwise, no conflict, return false.
       return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      // iterate through spots where rook present.
+      for(var i = 0; i < this.get('n'); i++){
+        if(this.hasRowConflictAt(i)){
+          return true;
+        }
+        // if conflict at index...
+          //... return true.
+      }
+      // otherwise return false.
       return false; // fixme
     },
 
@@ -93,12 +120,43 @@
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
+
+
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+
+      var counter = 0;
+      var rows = this.rows();
+      var columns = rows.map(function(row) {
+        return row[colIndex];
+      });
+
+      for(var i = 0; i < columns.length; i++){
+        if(columns[i] === 1){
+          counter++;
+        }
+      }
+      if (counter > 1) {
+        return true;
+      }
+
+      return false;
     },
+
+    //I'm back
+    //wanna jump on the appear in?
+    // see if count > 1.
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      //loop through columns
+      // var rows = this.row()
+      for (var i = 0; i < this.get('n'); i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
+        //for each colmun
+          //run the has colconflictat
       return false; // fixme
     },
 
