@@ -84,7 +84,7 @@
       //set total to items on board to zero.
       var total = 0;
       //iterate through row.
-      for (var i = 0; i < row.length; i++){
+      for (var i = 0; i < row.length; i++) {
         //if row location contains rook (1?) ...
         if (row[i] === 1) {
           // ...increment total.
@@ -92,7 +92,7 @@
         }
       }
       // if more than one rook in a row...
-      if (total >= 2){
+      if (total >= 2) {
         // ... return true
         return true;
       }
@@ -103,8 +103,8 @@
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       // iterate through spots where rook present.
-      for(var i = 0; i < this.get('n'); i++){
-        if(this.hasRowConflictAt(i)){
+      for (var i = 0; i < this.get('n'); i++) {
+        if (this.hasRowConflictAt(i)) {
           return true;
         }
         // if conflict at index...
@@ -130,8 +130,8 @@
         return row[colIndex];
       });
 
-      for(var i = 0; i < columns.length; i++){
-        if(columns[i] === 1){
+      for (var i = 0; i < columns.length; i++) {
+        if (columns[i] === 1) {
           counter++;
         }
       }
@@ -165,14 +165,44 @@
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
-    // test if a specific major diagonal on this board contains a conflict
+    // test if a specific major diagonal on this board contains a conflict (TL-BR)
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var total;
+      var rows = this.rows();
+
+      var subroutine = function(rowIndex, columnIndex) {
+        // debugger;
+        //get rid of in bounds
+        if (rowIndex === rows.length || columnIndex === rows.length) {
+          return;
+        } else {
+          if (rows[rowIndex][columnIndex] === 1) {
+            total++;
+          }
+          subroutine(++rowIndex, ++columnIndex);
+        }
+      };
+
+      for (var i = 0; i < rows.length; i++) {
+        total = 0;
+        subroutine(i, majorDiagonalColumnIndexAtFirstRow);
+        if (total >= 2) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
-    // test if any major diagonals on this board contain conflicts
+
+
+    // test if any major diagonals on this board contain conflicts (TL-BR)
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      for (var i = 0; i < this.get('n'); i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -180,13 +210,39 @@
     // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
     //
-    // test if a specific minor diagonal on this board contains a conflict
+    // test if a specific minor diagonal on this board contains a conflict (TR-BL)
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      var total;
+      var rows = this.rows();
+
+      var subroutine = function(rowIndex, columnIndex) {
+        if ( rowIndex === rows.length || columnIndex < 0 ) {
+          return;
+        } else {
+          if (rows[rowIndex][columnIndex] === 1) {
+            total++;
+          }
+          subroutine(++rowIndex, --columnIndex);
+        }
+      };
+
+      for (var i = 0; i < rows.length; i++) {
+        total = 0;
+        subroutine(i, minorDiagonalColumnIndexAtFirstRow);
+        if (total > 1){
+          return true;
+        }
+      }
       return false; // fixme
     },
 
-    // test if any minor diagonals on this board contain conflicts
+    // test if any minor diagonals on this board contain conflicts (TR-BL)
     hasAnyMinorDiagonalConflicts: function() {
+      for (var i = 0; i < this.get('n'); i++) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     }
 
