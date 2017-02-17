@@ -85,7 +85,7 @@
       var total = 0;
       //iterate through row.
       for (var i = 0; i < row.length; i++) {
-        //if row location contains rook (1?) ...
+        //if row location contains rook ...
         if (row[i] === 1) {
           // ...increment total.
           total++;
@@ -99,6 +99,8 @@
       // otherwise, no conflict, return false.
       return false; // fixme
     },
+    //TIME COMPLEXITY: O(1);
+
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
@@ -113,7 +115,7 @@
       // otherwise return false.
       return false; // fixme
     },
-
+    //TIME COMPLEXITY: O(1);
 
 
     // COLUMNS - run from top to bottom
@@ -142,9 +144,7 @@
       return false;
     },
 
-    //I'm back
-    //wanna jump on the appear in?
-    // see if count > 1.
+    //TIME COMPLEXITY: O(n)
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
@@ -160,7 +160,7 @@
       return false; // fixme
     },
 
-
+    //TIME COMPLEXITY: O(n)
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
@@ -171,8 +171,7 @@
       var rows = this.rows();
 
       var subroutine = function(rowIndex, columnIndex) {
-        // debugger;
-        //get rid of in bounds
+
         if (rowIndex === rows.length || columnIndex === rows.length) {
           return;
         } else {
@@ -190,10 +189,10 @@
           return true;
         }
       }
-      return false; // fixme
+      return false;
     },
 
-
+    //TIME COMPLEXITY: O(n!)
 
     // test if any major diagonals on this board contain conflicts (TL-BR)
     hasAnyMajorDiagonalConflicts: function() {
@@ -205,7 +204,7 @@
       return false;
     },
 
-
+      //TIME COMPLEXITY: O(n)
 
     // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
@@ -236,6 +235,8 @@
       return false; // fixme
     },
 
+    // TIME COMPLEXITY: O(n!)
+
     // test if any minor diagonals on this board contain conflicts (TR-BL)
     hasAnyMinorDiagonalConflicts: function() {
       for (var i = 0; i < this.get('n'); i++) {
@@ -245,6 +246,8 @@
       }
       return false; // fixme
     }
+
+    // TIME COMPLEXITY: O(n)
 
     /*--------------------  End of Helper Functions  ---------------------*/
 

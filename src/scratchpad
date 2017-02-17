@@ -194,7 +194,24 @@ hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
 
 
 
+var string = 'AAABBBCDDEEF'
 
+var nonRepeatingStrings = function(string){
+
+
+  var obj = {};
+
+  for(var char of string){
+    obj[char] ? obj[char] ++ : obj[char] = 1;
+  }
+
+  for(var char of string){
+    if(obj[prop] === 1){
+      return obj[prop];
+    }
+  }
+
+}
 
 
 
